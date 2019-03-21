@@ -1,8 +1,10 @@
 /* eslint no-use-before-define:0, consistent-return:0, max-statements:0 */
+'use strict';
 
-import Notation from './notation';
-import NotationError from './notation.error';
-import utils from '../utils';
+
+// import Notation from './notation';
+const NotationError = require('./notation.error');
+const utils = require('../utils');
 
 // http://www.linfo.org/wildcard.html
 // http://en.wikipedia.org/wiki/Glob_%28programming%29
@@ -967,4 +969,4 @@ function _negLastSort(a, b) {
 // EXPORT
 // --------------------------------
 
-export default NotationGlob;
+module.exports = NotationGlob;

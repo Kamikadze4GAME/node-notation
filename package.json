@@ -2,17 +2,23 @@
   "name": "notation2",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir dist --source-maps"
+    "build": "npm run build:clean && npm run build:cjs && npm run build:mjs",
+    "build:clean": "rm -rf ./dist && mkdir ./dist",
+    "build:js": "babel src",
+    "build:cjs": "npm run build:js -- --env-name cjs --out-dir dist/",
+    "build:mjs": "npm run build:js -- --env-name mjs --out-dir dist/module && for file in $(find dist/module -name '*.js'); do mv \"$file\" `echo \"$file\" | sed 's/dist\\/module/dist/g; s/.js$/.mjs/g'`; done && rm -rf dist/module"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.2.3",
     "@babel/core": "^7.4.0",
     "@babel/node": "^7.2.2",
+    "@babel/plugin-transform-spread": "^7.2.2",
     "@babel/preset-env": "^7.4.2"
   }
 }

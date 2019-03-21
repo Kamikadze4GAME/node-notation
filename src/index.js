@@ -1,1 +1,3 @@
-export { default } from './core/notation';
+'use strict';
+
+module.exports = require('./core/notation');

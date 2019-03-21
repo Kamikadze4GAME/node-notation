@@ -46,4 +46,4 @@ class NotationError extends Error {
 
 }
 
-export default NotationError;
+module.exports = NotationError;

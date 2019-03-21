@@ -1,8 +1,10 @@
 /* eslint no-use-before-define:0, consistent-return:0 */
 
-import NotationError from './notation.error';
-import NotationGlob from './notation.glob';
-import utils from '../utils';
+'use strict';
+
+const NotationError = require('./notation.error');
+const NotationGlob = require('./notation.glob');
+const utils = require('../utils');
 
 const ERR = {
     SOURCE: 'Invalid source. Expected a data object or array.',
@@ -1325,4 +1327,4 @@ function _each(collection, callback, parentNotation, topSource, byLevel = false)
 // EXPORT
 // --------------------------------
 
-export default Notation;
+module.exports = Notation;

@@ -1,5 +1,6 @@
+'use strict';
 
-import NotationError from './core/notation.error';
+const NotationError = require('./core/notation.error');
 
 const oPROTO = Object.prototype;
 
@@ -159,4 +160,4 @@ const utils = {
 
 };
 
-export default utils;
+module.exports = utils;
