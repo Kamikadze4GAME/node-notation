@@ -1,5 +1,6 @@
 /* eslint no-use-before-define:0, consistent-return:0, max-statements:0 */
-'use strict'; // import Notation from './notation';
+'use strict'; // TODO: require
+// const Notation = require('./notation');
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
@@ -122,7 +123,8 @@ function () {
      *  glob.test("prop.account.name"); // true
      */
     value: function test(notation) {
-      if (!Notation.isValid(notation)) {
+      // TODO: require
+      if (!require('./notation').isValid(notation)) {
         throw new NotationError("Invalid notation: '".concat(notation, "'"));
       } // return this.regexp.test(notation);
 
@@ -320,10 +322,7 @@ function () {
   }, {
     key: "hasMagic",
     value: function hasMagic(glob) {
-      console.log('NotationGlob.isValid', glob, NotationGlob.isValid(glob));
-      console.log('re.WILDCARDS.test', glob, re.WILDCARDS.test(glob));
-      console.log('glob[0] === !', glob, glob[0] === '!');
-      return NotationGlob.isValid(glob) && (re.WILDCARDS.test(glob) || glob[0] === '!');
+      return NotationGlob.isValid(glob) && (glob[0] === '!' || glob.search(re.WILDCARDS) !== -1);
     }
     /**
      *  Gets a regular expressions instance from the given glob notation.

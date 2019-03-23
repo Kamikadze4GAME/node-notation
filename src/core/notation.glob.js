@@ -2,7 +2,8 @@
 'use strict';
 
 
-// import Notation from './notation';
+// TODO: require
+// const Notation = require('./notation');
 const NotationError = require('./notation.error');
 const utils = require('../utils');
 
@@ -205,7 +206,8 @@ class NotationGlob {
      *  glob.test("prop.account.name"); // true
      */
     test(notation) {
-        if (!Notation.isValid(notation)) {
+      // TODO: require
+        if (!require('./notation').isValid(notation)) {
             throw new NotationError(`Invalid notation: '${notation}'`);
         }
         // return this.regexp.test(notation);
@@ -286,11 +288,7 @@ class NotationGlob {
      *  @returns {Boolean} -
      */
     static hasMagic(glob) {
-        console.log('NotationGlob.isValid', glob, NotationGlob.isValid(glob));
-        console.log('re.WILDCARDS.test', glob, re.WILDCARDS.test(glob));
-        console.log('glob[0] === !', glob, glob[0] === '!');
-        return NotationGlob.isValid(glob)
-            && (re.WILDCARDS.test(glob) || glob[0] === '!');
+      return NotationGlob.isValid(glob) && (glob[0] === '!' || glob.search(re.WILDCARDS) !== -1);
     }
 
     /**
