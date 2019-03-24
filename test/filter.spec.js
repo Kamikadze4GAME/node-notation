@@ -63,7 +63,18 @@ describe('Notation#filter()', () => {
         expect(o.company.limited).toBeDefined();
         expect(o.account.id).toBeDefined();
 
-        const assets = { model: 'Onur', phone: { brand: 'Apple', model: 'iPhone' }, car: { brand: 'Ford', model: 'Mustang' } };
+        const assets = {
+          model: 'Onur',
+          phone: {
+            brand: 'Apple',
+            model: 'iPhone'
+          },
+          car: {
+            brand: 'Ford',
+            model: 'Mustang'
+          }
+        };
+
         const N = Notation.create(assets);
         const m1 = N.filter('*').value;
         const m2 = N.filter('*.*').value;

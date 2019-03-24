@@ -79,9 +79,11 @@ function () {
   function NotationGlob(glob) {
     _classCallCheck(this, NotationGlob);
 
-    var ins = NotationGlob._inspect(glob);
+    var ins = NotationGlob._inspect(glob); // console.log('ins', ins);
 
-    var notes = NotationGlob.split(ins.absGlob, true);
+
+    var notes = NotationGlob.split(ins.absGlob, true); // console.log('notes', notes);
+
     var last = notes[notes.length - 1];
     var parent = notes.length > 1 ? ins.absGlob.slice(0, -last.length).replace(/\.$/, '') : null;
     this._ = _objectSpread({}, ins, {
@@ -480,7 +482,7 @@ function () {
   }, {
     key: "_inspect",
     value: function _inspect(glob) {
-      var g = utils.normalizeGlobStr(glob);
+      var g = utils.normalizeGlobStr(glob); // console.log('_inspect', glob, utils.normalizeGlobStr(glob));
 
       if (!NotationGlob.isValid(g)) {
         throw new NotationError("".concat(ERR_INVALID, " '").concat(glob, "'"));
@@ -513,7 +515,8 @@ function () {
 
       if (!NotationGlob.isValid(glob)) {
         throw new NotationError("".concat(ERR_INVALID, " '").concat(glob, "'"));
-      }
+      } // console.log('split', glob, utils.normalizeGlobStr(glob));
+
 
       var g = normalize ? utils.normalizeGlobStr(glob) : glob;
       return g.replace(/^!/, '').match(reMATCHER);

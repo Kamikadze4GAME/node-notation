@@ -3,6 +3,15 @@
     "node": true,
     "es6": true
   },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "globalReturn": true,
+      "experimentalObjectRestSpread": true,
+      "jsx": false
+    }
+  },
   "rules": {
     "no-multi-spaces": [
       "error",

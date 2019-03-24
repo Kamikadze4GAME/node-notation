@@ -74,7 +74,9 @@ class NotationGlob {
      */
     constructor(glob) {
         const ins = NotationGlob._inspect(glob);
+        // console.log('ins', ins);
         const notes = NotationGlob.split(ins.absGlob, true);
+        // console.log('notes', notes);
         const last = notes[notes.length - 1];
         const parent = notes.length > 1
             ? ins.absGlob.slice(0, -last.length).replace(/\.$/, '')
@@ -449,6 +451,7 @@ class NotationGlob {
      */
     static _inspect(glob) {
         const g = utils.normalizeGlobStr(glob);
+        // console.log('_inspect', glob, utils.normalizeGlobStr(glob));
         if (!NotationGlob.isValid(g)) {
             throw new NotationError(`${ERR_INVALID} '${glob}'`);
         }
@@ -476,6 +479,7 @@ class NotationGlob {
         if (!NotationGlob.isValid(glob)) {
             throw new NotationError(`${ERR_INVALID} '${glob}'`);
         }
+        // console.log('split', glob, utils.normalizeGlobStr(glob));
         const g = normalize ? utils.normalizeGlobStr(glob) : glob;
         return g.replace(/^!/, '').match(reMATCHER);
     }

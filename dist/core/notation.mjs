@@ -269,6 +269,7 @@ function () {
   }, {
     key: "inspect",
     value: function inspect(notation) {
+      // console.log('inspect', notation);
       var level = this._source;
       var result = {
         has: false,
@@ -276,6 +277,7 @@ function () {
       };
       var parent;
       Notation.eachNote(notation, function (levelNotation, note) {
+        // console.log('inspect, each', levelNotation);
         var lastNoteNormalized = utils.normalizeNote(note);
 
         if (utils.hasOwn(level, lastNoteNormalized)) {
@@ -674,7 +676,8 @@ function () {
 
       var globs = NotationGlob.normalize(globNotations);
       var len = globs.length;
-      var empty = this._isArray ? [] : {}; // if globs is "" or [""] set source to empty and return.
+      var empty = this._isArray ? [] : {}; // console.log('globs', globs);
+      // if globs is "" or [""] set source to empty and return.
 
       if (len === 0 || len === 1 && (!globs[0] || re.NEGATE_ALL.test(globs[0]))) {
         this._source = empty;
@@ -687,7 +690,8 @@ function () {
       if (len === 1 && firstIsWildcard) {
         this._source = copy;
         return this;
-      }
+      } // console.log('firstIsWildcard', globs[0]);
+
 
       var filtered; // if the first item of sorted globs is "*" or "[*]" we set the source
       // to the (full) "copy" and remove the wildcard from globs (not to
@@ -705,13 +709,17 @@ function () {
       var g, endStar, normalized; // iterate through globs
 
       utils.each(globs, function (globNotation) {
+        // console.log('utils.each', globNotation , '<<-', globs);
         g = new NotationGlob(globNotation); // set flag that indicates whether the glob ends with `.*`
 
-        endStar = g.absGlob.slice(-2) === '.*'; // get the remaining part as the (extra) normalized glob
+        endStar = g.absGlob.slice(-2) === '.*'; // TODO: Ostap
+
+        var beforeNorma = g.absGlob; // get the remaining part as the (extra) normalized glob
 
         normalized = endStar ? g.absGlob.slice(0, -2) : g.absGlob; // normalized = endStar ? g.absGlob.replace(/(\.\*)+$/, '') : g.absGlob;
         // check if normalized glob has no wildcard stars e.g. "a.b" or
         // "!a.b.c" etc..
+        // console.log('normalized', normalized, normalized.indexOf('*'));
 
         if (normalized.indexOf('*') < 0) {
           if (g.isNegated) {
@@ -738,23 +746,31 @@ function () {
 
 
         _this4.each(function (originalNotation, key, value) {
-          // console.log('>>', originalNotation);
+          // console.log();
+          // console.log();
+          // console.log('>>', originalNotation, '==', value);
+          // console.log(g.absGlob);
           // iterating each note of original notation. i.e.:
           // note1.note2.note3 is iterated from left to right, as:
           // 'note1', 'note1.note2', 'note1.note2.note3' — in order.
           Notation.eachNote(originalNotation, function (levelNotation) {
+            // console.log('^^', levelNotation);
             if (g.test(levelNotation)) {
+              // console.log('~~', levelNotation,'--', g.absGlob);
               if (g.isNegated) {
-                // console.log('removing', levelNotation, 'of', originalNotation);
-                filtered.remove(levelNotation); // we break and return early if removed bec. deeper
+                // console.log('--', levelNotation, 'of', originalNotation);
+                // console.log('before', filtered.value);
+                filtered.remove(levelNotation); // console.log('after', filtered.value);
+                // we break and return early if removed bec. deeper
                 // level props are also removed with this parent.
                 // e.g. when 'note1.note2' of 'note1.note2.note3' is
                 // removed, we no more have 'note3'.
 
                 return false;
-              }
+              } // console.log('++', levelNotation, value);
 
-              filtered.set(levelNotation, value, true);
+
+              filtered.set(levelNotation, value, true); // console.log('==', require('util').inspect(filtered.value, { depth: null }));
             }
           });
         });
@@ -1351,6 +1367,8 @@ function () {
   }, {
     key: "eachNote",
     value: function eachNote(notation, callback) {
+      // console.log('split', notation);
+      // console.log(Notation.split(notation));
       var notes = Notation.split(notation);
       var levelNotes = [];
       utils.each(notes, function (note, index) {
